@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Midterm assignement : Swissmetro SA - Diebolt Jordan</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/clipboard/clipboard.min.js"></script>
+<script src="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/quarto-html/quarto.js"></script>
+<script src="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/quarto-html/popper.min.js"></script>
+<script src="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/quarto-html/anchor.min.js"></script>
+<link href="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="UTPA_MidTerm_DIEBOLT_Jordan_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Midterm assignement : Swissmetro SA - Diebolt Jordan</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This document is the midterm report for the Urban Transportation Planning and Analysis class. In this report, we conduct an analysis on a dataset consisting of survey data collected in Switzerland, during March 1998. The goal of this analysis is to assess the impact of an hypothetical innovation : the Swissmetro SA, a revolutionary mag-lev underground system connecting major Swiss cities, operating at speed up to 500km/h. In the survey, nine stated choice situations were generated for each of 1191 respondents, offering three alternatives: rail, Swissmetro and car (only for car owners). Variables of the study include information on respondents such as age, gender, income; on their trip such as purpose of travel, origin, destination; and on the different alternatives such as travel time and cost. A variable is used to know whether a respondent possess a Swiss travel card (GA), allowing them to enjoy unlimited travel on most train lines, or not.</p>
+</section>
+<section id="section" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="section">1.</h2>
+<p>In this question, a general analysis of the data will be conducted.</p>
+<p>In examining the demographics of the respondents in the dataset, a notable observation emerges as approximately three-quarters of the participants identify as male, indicating a gender imbalance in the sample. Furthermore, when delving into the age distribution, a significant majority falls within the age range of 24 to 65 years. Notably, within this broader age span, the dataset showcases a balanced representation between the age groups of 24-39 and 39-54. This suggests a diverse pool of respondents, capturing perspectives from both the younger and middle-aged segments of the population. Highligthing such demographic characteristics is pivotal in understanding the nuances of travel preferences, as they may vary across depending on gender and age.</p>
+<div class="cell column-page quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<p>Analyzing the responses regarding the modes of transportation used in the different situations in the survey, shows that the Swissmetro is overall the predominant choice. This demonstrates that there is a strong interest among individuals for this new alternative. Following closely is the preference for using cars, suggesting a significant portion of respondents opting for the convenience and flexibility associated.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">2.</h2>
+<p>Here, a mode choice multinomial logit model will be implemented using the given utility functions. With ASC representing the alternative specific constants, CO standing for cost, and TT for travel time. The simulation gives estimation on the different coefficients :</p>
+<ul>
+<li><p>asc_train = -0.725288</p></li>
+<li><p>asc_sm = 0.032206</p></li>
+<li><p>b_ctr = -0.001086</p></li>
+<li><p>b_csm = -0.001156</p></li>
+<li><p>b_ccar = -0.003632</p></li>
+<li><p>b_tt_pt = -0.015783</p></li>
+<li><p>b_tt_car = -0.010792</p></li>
+<li><p>b_ga = 7.568564</p></li>
+</ul>
+<p>Furthermore, it gives the ρ² goodness-of-fit measure, which can be used to compare different models used on the same dataset.</p>
+<ul>
+<li><p>ρ² vs equal shares = 0.2602</p></li>
+<li><p>ρ² vs observed shares = 0.1274</p></li>
+</ul>
+</section>
+<section id="section-2" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="section-2">3.</h2>
+<p>Using the probabilities given by the estimation, the aggregate choice probabilities for each alternative are calculated using the sample enumeration method. It is noticeable that the results are very close to the ratios in the sample. It shows that the factors considered in the model employed to compute these aggregate choice probabilities appears to align coherently with the actual observed behaviors.</p>
+<div class="cell column-page quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Aggregate choice probabilities: "</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "train =  0.129303206506608"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SM =  0.571788379833732"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "car =  0.298908413659661"</code></pre>
+</div>
+</div>
+</section>
+<section id="section-3" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="section-3">4.</h2>
+<p>For this question, we want to analyze the effect of the price of the swissmetro on the choice probabilities for GA-pass holder and non holder. To do that, we will first set travel times for car and train to the sample average travel times between Canton Zurich (Zone 1) and Canton Vaud (Zone 22)1 before segmenting by GA-pass status.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Modifying train travel times</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>database<span class="sc">$</span>TRAIN_TT <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">subset</span>(database,database<span class="sc">$</span>DEST <span class="sc">==</span> <span class="dv">22</span><span class="sc">&amp;</span> database<span class="sc">$</span>ORIGIN <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">$</span>TRAIN_TT)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Modifying car travel times</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>database<span class="sc">$</span>CAR_TT <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">subset</span>(database,database<span class="sc">$</span>DEST <span class="sc">==</span> <span class="dv">22</span><span class="sc">&amp;</span> database<span class="sc">$</span>ORIGIN <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">$</span>CAR_TT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell column-page quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<p>Results show that for people having a GA pass, no matter how long the Swissmetro travel time is, they will still in general choose to take the swissmetro instead of train or car. This is explained by the fact that they have already paid for their pass, and thus want to make it worth, which also explain why the choice probabilities of car are very low. Conversely, for those without a GA pass, The car becomes the preferred option until reaching a specific travel time threshold, beyond which the Swissmetro becomes the favored choice. As people do not have a GA pass, it may be more cost-effective to use their cars up to a certain travel time. However, as travel time extends, comfort begins to outweigh cost considerations, making the Swissmetro a preferable alternative to the car.</p>
+</section>
+<section id="section-4" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="section-4">5.</h2>
+<p>Now, the travel time of Swissmetro is made equal to 200 minutes for every trip.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>database<span class="sc">$</span>SM_TT <span class="ot">=</span> <span class="dv">200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculating the aggregate choice probabilities using the sample enumeration method and plotting them in a piechart, we have the following result :</p>
+<div class="cell column-page quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="UTPA_MidTerm_DIEBOLT_Jordan_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<p>GA holder still want to make their GA profitable, but as SM travel time is fixed to 200min, the train is faster in most cases. As for non GA holder, the car is now their first choice as SM travel time makes it a non interesting option. They still prefer the convenience and flexibility of the car to the comfort and speed of the train.</p>
+</section>
+<section id="section-5" class="level2">
+<h2 class="anchored" data-anchor-id="section-5">6.</h2>
+<p>In this question, we calculate aggregate direct and cross elasticities for all variable expect GA. To do so, we calculate first individual direct and cross elasticities and calculate aggregate by using sample enumeration method.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Individual direct elasticities</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Eid_train_CO <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>train)<span class="sc">*</span>database<span class="sc">$</span>TRAIN_CO<span class="sc">*</span>est_b_ctr</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Eid_train_TT <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>train)<span class="sc">*</span>database<span class="sc">$</span>TRAIN_TT<span class="sc">*</span>est_b_tt_pt</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Eid_SM_CO <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>SM)<span class="sc">*</span>database<span class="sc">$</span>SM_CO<span class="sc">*</span>est_b_csm</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Eid_SM_TT <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>SM)<span class="sc">*</span>database<span class="sc">$</span>SM_TT<span class="sc">*</span>est_b_tt_pt</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>Eid_car_CO <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>car)<span class="sc">*</span>database<span class="sc">$</span>CAR_CO<span class="sc">*</span>est_b_ccar</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>Eid_car_TT <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>car)<span class="sc">*</span>database<span class="sc">$</span>CAR_TT<span class="sc">*</span>est_b_tt_car</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregate direct elasticities</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>Ead_train_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Eid_train_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>Ead_train_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Eid_train_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>Ead_SM_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Eid_SM_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>Ead_SM_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Eid_SM_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>Ead_car_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Eid_car_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>Ead_car_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Eid_car_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Aggregate direct elasticities : "</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Ead_train_CO = -1.32899081841878"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Ead_train_TT = -1.73750549073076"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Ead_SM_CO = -0.309070808258001"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Ead_SM_TT = -0.554171061632766"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Ead_car_CO = -0.22593263614294"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Ead_car_TT = -1.03310735054907"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Individual cross elasticities</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Eic_SM_CO <span class="ot">=</span> <span class="sc">-</span>SM<span class="sc">*</span>database<span class="sc">$</span>SM_CO<span class="sc">*</span>est_b_csm</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Eic_SM_TT <span class="ot">=</span> <span class="sc">-</span>SM<span class="sc">*</span>database<span class="sc">$</span>SM_TT<span class="sc">*</span>est_b_tt_pt</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>Eic_CAR_CO <span class="ot">=</span> <span class="sc">-</span>car<span class="sc">*</span>database<span class="sc">$</span>CAR_CO<span class="sc">*</span>est_b_ccar</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>Eic_CAR_TT <span class="ot">=</span> <span class="sc">-</span>car<span class="sc">*</span>database<span class="sc">$</span>CAR_TT<span class="sc">*</span>est_b_tt_car</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Eic_TRAIN_CO <span class="ot">=</span> <span class="sc">-</span>train<span class="sc">*</span>database<span class="sc">$</span>TRAIN_CO<span class="sc">*</span>est_b_ctr</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>Eic_TRAIN_TT <span class="ot">=</span> <span class="sc">-</span>train<span class="sc">*</span>database<span class="sc">$</span>TRAIN_TT<span class="sc">*</span>est_b_tt_pt</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregate cross elasticities</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>Eac_train_SM_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Eic_SM_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>Eac_train_SM_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Eic_SM_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>Eac_train_CAR_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Eic_CAR_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>Eac_train_CAR_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Eic_CAR_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>Eac_SM_TRAIN_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Eic_TRAIN_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>Eac_SM_TRAIN_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Eic_TRAIN_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>Eac_SM_CAR_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Eic_CAR_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>Eac_SM_CAR_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Eic_CAR_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>Eac_car_SM_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Eic_SM_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>Eac_car_SM_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Eic_SM_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>Eac_car_TRAIN_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Eic_TRAIN_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>Eac_car_TRAIN_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Eic_TRAIN_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Aggregate cross elasticities : "</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_train_SM_CO = 1.28533334674235"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_train_SM_TT = 0.624200813549941"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_train_CAR_CO = 0.0571199516588079"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_train_CAR_TT = 0.252986648176713"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_SM_TRAIN_CO = 0.0703815595334054"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_SM_TRAIN_TT = 0.344660960729713"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_SM_CAR_CO = 0.0869169311449651"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_SM_CAR_TT = 0.410072237829633"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_car_SM_CO = 0.116777834908398"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_car_SM_TT = 0.953450086985037"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_car_TRAIN_CO = 0.0202486886843552"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eac_car_TRAIN_TT = 0.376489945053954"</code></pre>
+</div>
+</div>
+</section>
+<section id="section-6" class="level2">
+<h2 class="anchored" data-anchor-id="section-6">7.</h2>
+<p>Note that all the aggregate direct elasticity of the variable SM_TT are negative. It means that on average, an increase of 1% in SM travel time would lead to a decrease of approximately 0.55% in the aggregate probability of choosing SM. However, the aggregate cross elasticities of the variable SM_TT are all positive. It means that an increase of 1% in SM travel time would lead to a increase of 0.62% and 0.95% in the aggregate probability of choosing train and car respectively. Those results follows intuition as a higher travelling time for the same cost makes the alternative less attractive.</p>
+</section>
+<section id="section-7" class="level2">
+<h2 class="anchored" data-anchor-id="section-7">8.</h2>
+<p>In this question, we calculate aggregate direct marginal effects. To do so, we calculate first individual direct marginal effects and calculate aggregate by using sample enumeration method.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Individual direct marginal effect</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>Mid_train_CO <span class="ot">=</span> train<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>train)<span class="sc">*</span>est_b_ctr</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>Mid_train_TT <span class="ot">=</span> train<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>train)<span class="sc">*</span>est_b_tt_pt</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>Mid_train_GA <span class="ot">=</span> train<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>train)<span class="sc">*</span>est_b_ga</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>Mid_SM_CO <span class="ot">=</span> SM<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>SM)<span class="sc">*</span>est_b_csm</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>Mid_SM_TT <span class="ot">=</span> SM<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>SM)<span class="sc">*</span>est_b_tt_pt</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>Mid_SM_GA <span class="ot">=</span> SM<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>SM)<span class="sc">*</span>est_b_ga</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>Mid_car_CO <span class="ot">=</span> car<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>car)<span class="sc">*</span>est_b_ccar</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>Mid_car_TT <span class="ot">=</span> car<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>car)<span class="sc">*</span>est_b_tt_car</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>Mid_car_GA <span class="ot">=</span> car<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>car)<span class="sc">*</span>est_b_ga</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregate direct marginal effect</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>Mad_train_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Mid_train_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>Mad_train_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Mid_train_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>Mad_train_GA <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>train<span class="sc">*</span>Mid_train_GA)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>train)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>Mad_SM_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Mid_SM_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>Mad_SM_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Mid_SM_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>Mad_SM_GA <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM<span class="sc">*</span>Mid_SM_GA)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>SM)</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>Mad_car_CO <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Mid_car_CO)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>Mad_car_TT <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Mid_car_TT)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>Mad_car_GA <span class="ot">=</span> <span class="fu">sum</span>(predictions_new<span class="sc">$</span>car<span class="sc">*</span>Mid_car_GA)<span class="sc">/</span><span class="fu">sum</span>(predictions_new<span class="sc">$</span>car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Aggregate direct marginal effect: "</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_train_CO = -0.000122211839727734"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_train_TT = -0.00177692948364039"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_train_GA = 0.852097783477319"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_SM_CO = -0.000283065518466023"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_SM_TT = -0.00386445277312895"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_SM_GA = 1.85313580119668"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_car_CO = -0.000761033402757579"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_car_TT = -0.00226169876570722"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mad_car_GA = 1.58608490473562"</code></pre>
+</div>
+</div>
+</section>
+<section id="section-8" class="level2">
+<h2 class="anchored" data-anchor-id="section-8">9.</h2>
+<p>Note that all the aggregate direct marginal effect of the variable GA are positive. It means if someone possess a GA, they will be more likely to take train, SM or car. Overall, people possessing a GA travel more than those who do not have one, which is why all the aggregate direct marginal effect are positive. The utility function associated with SM is the most affected by GA as the coefficient is the highest in absolute value, followed by car and train. SM is the first choice of people possessing GA as they want to make it worth, conversely train is less interesting as SM is more efficient for the same cost.</p>
+</section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9">10.</h2>
+<p>In this question, we calculate the value of travel time saving of each mode, which is the ratio of travel time and travel cost.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "VTTS_train = 14.539749075041"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "VTTS_SM = 13.6521494884683"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "VTTS_car = 2.97187844516683"</code></pre>
+</div>
+</div>
+<p>A higher VTTS indicates a higher value on time saving, meaning that people are ready to pay more to save time. Here, the train has the highest VTTS followed closely by SM and then car is way lower. Therefore, when taking train or SM people are willing to pay more to save time than when taking car.</p>
+</section>
+<section id="section-10" class="level2">
+<h2 class="anchored" data-anchor-id="section-10">11.</h2>
+<p>Let’s reduce the SM travel time value by 20% to see how it impacts choice probabilities.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Base probabilities :"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "train =  0.129303206506608"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SM =  0.571788379833732"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "car =  0.298908413659661"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "After reducing SM travel time :"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "train_smttreduced = 0.114671067436926"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "car_smttreduced = 0.257028111196846"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sm_smttreduced = 0.628300821366228"</code></pre>
+</div>
+</div>
+<p>After reducing SM travel time, its aggregate choice probabilities increased a bit, which is logical as SM is becoming more efficient for the same price, thus more attractive.</p>
+</section>
+<section id="section-11" class="level2">
+<h2 class="anchored" data-anchor-id="section-11">12.</h2>
+<p>Let’s exclude the GA variable from our utility function to see how it impacts the estimated cost coefficients.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Without excluding GA variable :"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_ctr =  -0.00108551874556248"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_csm =  -0.00115609415133225"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Excluding GA variable :"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_ctr_noGA =  0.000726180324022963"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_csm_noGA =  0.000248258602119401"</code></pre>
+</div>
+</div>
+<p>The train and Swissmetro cost parameters sign change when removing the variable GA, they become positive. If a cost coefficient of an alternative is positive, it means that if the cost increases the alternative is more likely to be chosen, which is counter intuitive. Therefore, it is necessary to take the GA variable into account to have coherent results.</p>
+</section>
+<section id="section-12" class="level2">
+<h2 class="anchored" data-anchor-id="section-12">13.</h2>
+<p>Let’s take into account the variable LUGGAGE in our utility function.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Estimated coefficients with base utility function: "</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_asc_train =  -0.725288257794259"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_sc_sm =  0.0322057603732982"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_ctr =  -0.00108551874556248"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_csm =  -0.00115609415133225"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_ccar =  -0.00363153946772849"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_tt_pt =  -0.0157831701767318"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_tt_car =  -0.0107924938669149"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_ga =  7.56856388937052"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Estimated coefficients when luggage is taken into account: "</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_asc_train_luggage =  -1.13102246037147"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_sc_sm_luggage =  -0.090661239749187"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_ctr_luggage =  -0.00107702017948205"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_csm_luggage =  -0.00112846763895155"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_ccar_luggage =  -0.00343406436826367"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_tt_pt_luggage =  -0.0157486001895524"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_tt_car_luggage =  -0.0109068208342039"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_ga_luggage =  7.31357871841668"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_carluggage =  -0.601243877029878"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_smluggage =  -0.381032944717753"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "est_b_trainluggage =  -0.0119005331403898"</code></pre>
+</div>
+</div>
+<p>Let’s use the goodness-of-fit measure to compare this model and the previous one :</p>
+<p>With the first model we had :</p>
+<ul>
+<li><p>ρ² vs equal shares = 0.2602</p></li>
+<li><p>ρ² vs observed shares = 0.1274</p></li>
+</ul>
+<p>When taking luggage into account :</p>
+<ul>
+<li><p>ρ² vs equal shares = 0.2608</p></li>
+<li><p>ρ² vs observed shares = 0.1339</p></li>
+</ul>
+<p>Therefore, the new model is superior in term of goodness-of-fit than the first one.</p>
+<p>Overall, these estimated coefficients are really close to the one we had before. The new coefficients associated with luggage are all negative, and in absolute value, the coefficient associated with car is the highest followed by sm and train. It means that when people have luggage the choice probability that they take the car is more reduced than for sm and train. I decided to include this parameter since as a transport user, I know that when I have to take luggage to travel it means that I will go pretty far from home, which leads me to take train instead of car.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

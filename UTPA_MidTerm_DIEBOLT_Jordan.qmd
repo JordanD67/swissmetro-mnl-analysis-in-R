@@ -1,0 +1,942 @@
+---
+title: "Midterm assignement : Swissmetro SA - Diebolt Jordan"
+format: html
+editor: visual
+---
+
+## Introduction
+
+This document is the midterm report for the Urban Transportation Planning and Analysis class. In this report, we conduct an analysis on a dataset consisting of survey data collected in Switzerland, during March 1998. The goal of this analysis is to assess the impact of an hypothetical innovation : the Swissmetro SA, a revolutionary mag-lev underground system connecting major Swiss cities, operating at speed up to 500km/h. In the survey, nine stated choice situations were generated for each of 1191 respondents, offering three alternatives: rail, Swissmetro and car (only for car owners). Variables of the study include information on respondents such as age, gender, income; on their trip such as purpose of travel, origin, destination; and on the different alternatives such as travel time and cost. A variable is used to know whether a respondent possess a Swiss travel card (GA), allowing them to enjoy unlimited travel on most train lines, or not.
+
+```{r}
+#| echo: false
+#| include: false
+# install the package if it has not been installed
+if (!("apollo" %in% rownames(installed.packages()))){
+  install.packages("apollo")
+} 
+if (!("tidyverse" %in% rownames(installed.packages()))){
+  install.packages("tidyverse")
+} 
+
+# ################################################################# #
+#### LOAD LIBRARY AND DEFINE CORE SETTINGS                       ####
+# ################################################################# #
+
+### Clear memory｜メモリをクリアする
+rm(list = ls()) ##ça supprime tout 
+
+### Load Apollo library｜パッケージをロードする
+library(apollo)
+library(tidyverse)
+
+### Initialise code｜コードを初期化する
+apollo_initialise()
+
+### Set core controls｜コア項目を設定する（モデル名、モデルの説明、個人IDの変数設定）
+apollo_control = list(
+  modelName  ="Apollo MidTerm Diebolt Jordan",
+  modelDescr ="Simple MNL model on mode choice RP data",
+  indivID    ="ID" #based on the dataset
+)
+
+# ################################################################# #
+#### LOAD DATA AND APPLY ANY TRANSFORMATIONS                     ####
+# ################################################################# #
+
+### read data|データを読み込む
+database = read.csv("smdata_ps1.csv",header=TRUE)
+
+# ################################################################# #
+#### ANALYSIS OF CHOICES                                         ####
+# ################################################################# #
+
+choiceAnalysis_settings <- list(
+  alternatives = c(train=1, SM=2, car=3),
+  avail        = list(train=database$TRAIN_AV, SM=database$SM_AV,  car=database$CAR_AV),
+  choiceVar    = database$CHOICE,
+  explanators  = database[,c("TICKET","WHO","LUGGAGE","AGE","MALE","INCOME","GA","ORIGIN","DEST")],
+  rows         = 'all'
+)
+
+apollo_choiceAnalysis(choiceAnalysis_settings, apollo_control, database)
+# ################################################################# #
+#### DEFINE MODEL PARAMETERS                                     ####
+# ################################################################# #
+
+### Vector of parameters, including any that are kept fixed in estimation
+### 固定パラメータを含むパラメータのベクトル
+apollo_beta=c(asc_train   = 0,    #Initial value start from 0
+              asc_sm   = 0,
+              b_ctr = 0,
+              b_csm = 0,
+              b_ccar = 0,
+              b_tt_pt = 0,
+              b_tt_car  = 0,
+              b_ga = 0)
+
+### Vector with names (in quotes) of parameters to be kept fixed at their starting value in apollo_beta, use apollo_beta_fixed = c() if none
+###　初期値で固定する定数項（固定パラメータがない場合、apollo_beta_fixed = c()を使う）
+apollo_fixed = c()
+# ################################################################# #
+#### GROUP AND VALIDATE INPUTS                                   ####
+# ################################################################# #
+### 入力確認
+apollo_inputs = apollo_validateInputs()
+
+# ################################################################# #
+#### DEFINE MODEL AND LIKELIHOOD FUNCTION                        ####
+# ################################################################# #
+
+apollo_probabilities=function(apollo_beta, apollo_inputs, functionality="estimate"){
+  
+  ### Attach inputs and detach after function exit
+  apollo_attach(apollo_beta, apollo_inputs)
+  on.exit(apollo_detach(apollo_beta, apollo_inputs))
+  
+  ### Create list of probabilities P｜確率のリストを作成する
+  P = list()
+  
+  ### List of utilities: these must use the same names as in mnl_settings, order is irrelevant
+  ### 効用関数のリスト：選択肢の名義は以下の「mnl_settings」と同じでなければならない（順番は関係ない）
+  V = list()
+  V[['train']]  = asc_train  + b_ctr  * TRAIN_CO + b_tt_pt * TRAIN_TT + b_ga*GA
+  V[['SM']]  = asc_sm  + b_csm*SM_CO + b_tt_pt * SM_TT + b_ga*GA
+  V[['car']]  = b_ccar*CAR_CO + b_tt_car*CAR_TT
+  
+  
+  ### Define settings for MNL model component
+  ###　MNLモデル項目を設定する
+  mnl_settings = list(
+    alternatives  = c(train=1, SM=2, car=3), 
+    avail         = list(train=TRAIN_AV, SM=SM_AV,  car=CAR_AV),
+    choiceVar     = CHOICE,
+    V             = V
+  )
+  
+  ### Compute probabilities using MNL model
+  ### MNLを用いて選択確率を求める
+  P[['model']] = apollo_mnl(mnl_settings, functionality)
+  
+  ### Take product across observation for same individuals(panel data only)
+  ###　個体（意思決定者）毎の確率積を求める（パネルデータの場合のみ）
+ # P = apollo_panelProd(P, apollo_inputs, functionality)
+  
+  ### Prepare and return outputs of function
+  ### アウトプットを整理して返す
+  P = apollo_prepareProb(P, apollo_inputs, functionality)
+  return(P)
+}
+
+# ################################################################# #
+#### MODEL ESTIMATION                                            ####
+# ################################################################# #
+
+model = apollo_estimate(apollo_beta, apollo_fixed, apollo_probabilities, apollo_inputs)
+
+# ################################################################# #
+#### MODEL OUTPUTS                                               ####
+# ################################################################# #
+
+# ----------------------------------------------------------------- #
+#---- FORMATTED OUTPUT (TO SCREEN)                               ----
+# ----------------------------------------------------------------- #
+
+apollo_modelOutput(model)
+
+# ################################################################# #
+#### PREDICTION                                                  ####
+# ################################################################# #
+
+# ----------------------------------------------------------------- #
+#---- ESTIMATED PROBABILITIES                                    ----
+# ----------------------------------------------------------------- #
+
+predictions = apollo_prediction(model, apollo_probabilities, apollo_inputs)
+```
+
+## 1.
+
+In this question, a general analysis of the data will be conducted.
+
+In examining the demographics of the respondents in the dataset, a notable observation emerges as approximately three-quarters of the participants identify as male, indicating a gender imbalance in the sample. Furthermore, when delving into the age distribution, a significant majority falls within the age range of 24 to 65 years. Notably, within this broader age span, the dataset showcases a balanced representation between the age groups of 24-39 and 39-54. This suggests a diverse pool of respondents, capturing perspectives from both the younger and middle-aged segments of the population. Highligthing such demographic characteristics is pivotal in understanding the nuances of travel preferences, as they may vary across depending on gender and age.
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| column: page
+
+
+male = sum(database$MALE==1)
+female = sum(database$MALE==0)
+d = c(male, female)
+labels <- c("male","female")
+pie(d,label=labels)
+title("Gender repartition")
+
+age1 = sum(database$AGE==1)
+age2 = sum(database$AGE==2)
+age3 = sum(database$AGE==3)
+age4 = sum(database$AGE==4)
+age5 = sum(database$AGE==5)
+age6 = sum(database$AGE==6)
+
+d = c(age1,age2,age3,age4,age5,age6)
+labels <- c("≤24","24<age≤39","39<age≤54","54<age≤65","65>", "Unknown")
+pie(d,label=labels)
+title("Age repartition")
+
+
+
+```
+
+Analyzing the responses regarding the modes of transportation used in the different situations in the survey, shows that the Swissmetro is overall the predominant choice. This demonstrates that there is a strong interest among individuals for this new alternative. Following closely is the preference for using cars, suggesting a significant portion of respondents opting for the convenience and flexibility associated.
+
+```{r}
+#| echo: false
+total = sum(database$CHOICE==0)+ sum(database$CHOICE==1) + sum(database$CHOICE==2) + sum(database$CHOICE==3)
+unknown = sum(database$CHOICE==0)/total
+train = sum(database$CHOICE==1)/total
+SM = sum(database$CHOICE==2)/total
+car = sum(database$CHOICE==3)/total
+
+d = c(unknown,train,SM,car)
+labels <- c("Unknown", "Train", "SM", "Car")
+pie(d,label = labels)
+title("Transport choice repartition")
+
+```
+
+## 2.
+
+Here, a mode choice multinomial logit model will be implemented using the given utility functions. With ASC representing the alternative specific constants, CO standing for cost, and TT for travel time. The simulation gives estimation on the different coefficients :
+
+-   asc_train = -0.725288
+
+-   asc_sm = 0.032206
+
+-   b_ctr = -0.001086
+
+-   b_csm = -0.001156
+
+-   b_ccar = -0.003632
+
+-   b_tt_pt = -0.015783
+
+-   b_tt_car = -0.010792
+
+-   b_ga = 7.568564
+
+Furthermore, it gives the ρ² goodness-of-fit measure, which can be used to compare different models used on the same dataset.
+
+-   ρ² vs equal shares = 0.2602
+
+-   ρ² vs observed shares = 0.1274
+
+## 3.
+
+Using the probabilities given by the estimation, the aggregate choice probabilities for each alternative are calculated using the sample enumeration method. It is noticeable that the results are very close to the ratios in the sample. It shows that the factors considered in the model employed to compute these aggregate choice probabilities appears to align coherently with the actual observed behaviors.
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| column: page
+agg_train = mean(predictions$train)
+agg_sm = mean(predictions$SM)
+agg_car = mean(predictions$car)
+d = c(agg_train,agg_sm,agg_car)
+labels <- c("Train", "SM", "Car")
+pie(d,label= labels)
+title("Aggregate choice probabilities of each mean of transport")
+
+total = sum(database$CHOICE==0)+ sum(database$CHOICE==1) + sum(database$CHOICE==2) + sum(database$CHOICE==3)
+unknown = sum(database$CHOICE==0)/total
+train = sum(database$CHOICE==1)/total
+SM = sum(database$CHOICE==2)/total
+car = sum(database$CHOICE==3)/total
+d = c(train,SM,car)
+labels <- c("Train", "SM", "Car")
+pie(d,label = labels)
+title("Mean of transport choice repartition")
+
+```
+
+```{r}
+#| echo: false
+print("Aggregate choice probabilities: ")
+print(paste("train = ", agg_train))
+print(paste("SM = ", agg_sm))
+print(paste("car = ", agg_car))
+```
+
+## 4.
+
+For this question, we want to analyze the effect of the price of the swissmetro on the choice probabilities for GA-pass holder and non holder. To do that, we will first set travel times for car and train to the sample average travel times between Canton Zurich (Zone 1) and Canton Vaud (Zone 22)1 before segmenting by GA-pass status.
+
+```{r}
+#Modifying train travel times
+database$TRAIN_TT = mean(subset(database,database$DEST == 22& database$ORIGIN == 1)$TRAIN_TT)
+#Modifying car travel times
+database$CAR_TT = mean(subset(database,database$DEST == 22& database$ORIGIN == 1)$CAR_TT)
+
+```
+
+```{r}
+#| echo: false
+#| include: false
+apollo_inputs = apollo_validateInputs()
+#Rerun predictions
+predictions_new = apollo_prediction(model, apollo_probabilities, apollo_inputs)
+```
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| column: page
+
+#Creating a subset with only GA holder
+GA_holder = subset(database,database$GA==1)
+pred_GA_holder = subset(predictions_new,  predictions_new$ID %in%  GA_holder$ID)
+plot(GA_holder$SM_TT,pred_GA_holder$train,col= "#5DCDF4", xlab="Swissmetro travel time for GA holder",ylab="Choice probabilities for GA holder")
+points(GA_holder$SM_TT,pred_GA_holder$SM, col="#F45D82" )
+points(GA_holder$SM_TT,pred_GA_holder$car, col ="#845DF4")
+legend(200,0.8,legend=c("Train","SM","Car"),col=c("#5DCDF4","#F45D82","#845DF4"),pch=1)
+
+
+#Creating a subset with only non GA holder
+GA_nonholder = subset(database,database$GA==0)
+pred_GA_nonholder = subset(predictions_new,  predictions_new$ID %in%  GA_nonholder$ID)
+plot(GA_nonholder$SM_TT,pred_GA_nonholder$train,col= "#5DCDF4", xlab="Swissmetro travel time for GA nonholder",ylab="Choice probabilities for GA nonholder")
+points(GA_nonholder$SM_TT,pred_GA_nonholder$SM, col="#F45D82" )
+points(GA_nonholder$SM_TT,pred_GA_nonholder$car, col ="#845DF4")
+legend(650,0.25,legend=c("Train","SM","Car"), col=c("#5DCDF4","#F45D82","#845DF4"),pch = 1)
+```
+
+Results show that for people having a GA pass, no matter how long the Swissmetro travel time is, they will still in general choose to take the swissmetro instead of train or car. This is explained by the fact that they have already paid for their pass, and thus want to make it worth, which also explain why the choice probabilities of car are very low. Conversely, for those without a GA pass, The car becomes the preferred option until reaching a specific travel time threshold, beyond which the Swissmetro becomes the favored choice. As people do not have a GA pass, it may be more cost-effective to use their cars up to a certain travel time. However, as travel time extends, comfort begins to outweigh cost considerations, making the Swissmetro a preferable alternative to the car.
+
+## 5.
+
+Now, the travel time of Swissmetro is made equal to 200 minutes for every trip.
+
+```{r}
+database$SM_TT = 200
+```
+
+Calculating the aggregate choice probabilities using the sample enumeration method and plotting them in a piechart, we have the following result :
+
+```{r}
+#| echo: false
+#| include: false
+apollo_inputs = apollo_validateInputs()
+#Rerun predictions
+predictions_new = apollo_prediction(model, apollo_probabilities, apollo_inputs)
+```
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| column: page
+#Creating a subset with only GA holder
+GA_holder = subset(database,database$GA==1)
+pred_GA_holder = subset(predictions_new,  predictions_new$ID %in%  GA_holder$ID)
+
+#Creating a subset with only non GA holder
+GA_nonholder = subset(database,database$GA==0)
+pred_GA_nonholder = subset(predictions_new,  predictions_new$ID %in%  GA_nonholder$ID)
+
+agg_train_GA = mean(pred_GA_holder$train)
+agg_sm_GA = mean(pred_GA_holder$SM)
+agg_car_GA = mean(pred_GA_holder$car)
+d = c(agg_train_GA,agg_sm_GA,agg_car_GA)
+labels <- c("Train", "SM", "Car")
+pie(d,label= labels)
+title("Aggregate choice probabilities when SM_TT = 200 for GA holder")
+
+agg_train_nonGA = mean(pred_GA_nonholder$train)
+agg_sm_nonGA = mean(pred_GA_nonholder$SM)
+agg_car_nonGA = mean(pred_GA_nonholder$car)
+d = c(agg_train_nonGA,agg_sm_nonGA,agg_car_nonGA)
+labels <- c("Train", "SM", "Car")
+pie(d,label= labels)
+title("Aggregate choice probabilities when SM_TT = 200 for GA nonholder")
+
+
+```
+
+GA holder still want to make their GA profitable, but as SM travel time is fixed to 200min, the train is faster in most cases. As for non GA holder, the car is now their first choice as SM travel time makes it a non interesting option. They still prefer the convenience and flexibility of the car to the comfort and speed of the train.
+
+```{r}
+#| echo: false
+#| include: false
+#Return to original data 
+database = read.csv("smdata_ps1.csv",header=TRUE)
+apollo_inputs = apollo_validateInputs()
+#Rerun predictions
+predictions_new = apollo_prediction(model, apollo_probabilities, apollo_inputs)
+```
+
+## 6.
+
+In this question, we calculate aggregate direct and cross elasticities for all variable expect GA. To do so, we calculate first individual direct and cross elasticities and calculate aggregate by using sample enumeration method.
+
+```{r}
+#| echo: false
+#| include: false
+#Estimated coefficients
+est_asc_train   = apollo_modelOutput(model)[1]
+est_sc_sm   = apollo_modelOutput(model)[2]
+est_b_ctr = apollo_modelOutput(model)[3]
+est_b_csm = apollo_modelOutput(model)[4]
+est_b_ccar = apollo_modelOutput(model)[5]
+est_b_tt_pt = apollo_modelOutput(model)[6]
+est_b_tt_car  = apollo_modelOutput(model)[7]
+est_b_ga = apollo_modelOutput(model)[8]
+
+```
+
+```{r}
+#Individual direct elasticities
+Eid_train_CO = (1-train)*database$TRAIN_CO*est_b_ctr
+Eid_train_TT = (1-train)*database$TRAIN_TT*est_b_tt_pt
+Eid_SM_CO = (1-SM)*database$SM_CO*est_b_csm
+Eid_SM_TT = (1-SM)*database$SM_TT*est_b_tt_pt
+Eid_car_CO = (1-car)*database$CAR_CO*est_b_ccar
+Eid_car_TT = (1-car)*database$CAR_TT*est_b_tt_car
+
+#Aggregate direct elasticities
+Ead_train_CO = sum(predictions_new$train*Eid_train_CO)/sum(predictions_new$train)
+Ead_train_TT = sum(predictions_new$train*Eid_train_TT)/sum(predictions_new$train)
+Ead_SM_CO = sum(predictions_new$SM*Eid_SM_CO)/sum(predictions_new$SM)
+Ead_SM_TT = sum(predictions_new$SM*Eid_SM_TT)/sum(predictions_new$SM)
+Ead_car_CO = sum(predictions_new$car*Eid_car_CO)/sum(predictions_new$car)
+Ead_car_TT = sum(predictions_new$car*Eid_car_TT)/sum(predictions_new$car)
+
+```
+
+```{r}
+#| echo: false
+print("Aggregate direct elasticities : ")
+print(paste("Ead_train_CO =", Ead_train_CO))
+print(paste("Ead_train_TT =", Ead_train_TT))
+print(paste("Ead_SM_CO =", Ead_SM_CO))
+print(paste("Ead_SM_TT =", Ead_SM_TT))
+print(paste("Ead_car_CO =", Ead_car_CO))
+print(paste("Ead_car_TT =", Ead_car_TT))
+
+```
+
+```{r}
+#Individual cross elasticities
+Eic_SM_CO = -SM*database$SM_CO*est_b_csm
+Eic_SM_TT = -SM*database$SM_TT*est_b_tt_pt
+Eic_CAR_CO = -car*database$CAR_CO*est_b_ccar
+Eic_CAR_TT = -car*database$CAR_TT*est_b_tt_car
+Eic_TRAIN_CO = -train*database$TRAIN_CO*est_b_ctr
+Eic_TRAIN_TT = -train*database$TRAIN_TT*est_b_tt_pt
+
+#Aggregate cross elasticities
+Eac_train_SM_CO = sum(predictions_new$train*Eic_SM_CO)/sum(predictions_new$train)
+Eac_train_SM_TT = sum(predictions_new$train*Eic_SM_TT)/sum(predictions_new$train)
+Eac_train_CAR_CO = sum(predictions_new$train*Eic_CAR_CO)/sum(predictions_new$train)
+Eac_train_CAR_TT = sum(predictions_new$train*Eic_CAR_TT)/sum(predictions_new$train)
+
+Eac_SM_TRAIN_CO = sum(predictions_new$SM*Eic_TRAIN_CO)/sum(predictions_new$SM)
+Eac_SM_TRAIN_TT = sum(predictions_new$SM*Eic_TRAIN_TT)/sum(predictions_new$SM)
+Eac_SM_CAR_CO = sum(predictions_new$SM*Eic_CAR_CO)/sum(predictions_new$SM)
+Eac_SM_CAR_TT = sum(predictions_new$SM*Eic_CAR_TT)/sum(predictions_new$SM)
+
+Eac_car_SM_CO = sum(predictions_new$car*Eic_SM_CO)/sum(predictions_new$car)
+Eac_car_SM_TT = sum(predictions_new$car*Eic_SM_TT)/sum(predictions_new$car)
+Eac_car_TRAIN_CO = sum(predictions_new$car*Eic_TRAIN_CO)/sum(predictions_new$car)
+Eac_car_TRAIN_TT = sum(predictions_new$car*Eic_TRAIN_TT)/sum(predictions_new$car)
+
+```
+
+```{r}
+#| echo: false
+
+print("Aggregate cross elasticities : ")
+print(paste("Eac_train_SM_CO =", Eac_train_SM_CO))
+print(paste("Eac_train_SM_TT =", Eac_train_SM_TT))
+print(paste("Eac_train_CAR_CO =", Eac_train_CAR_CO))
+print(paste("Eac_train_CAR_TT =", Eac_train_CAR_TT))
+print(paste("Eac_SM_TRAIN_CO =", Eac_SM_TRAIN_CO))
+print(paste("Eac_SM_TRAIN_TT =", Eac_SM_TRAIN_TT))
+print(paste("Eac_SM_CAR_CO =", Eac_SM_CAR_CO))
+print(paste("Eac_SM_CAR_TT =", Eac_SM_CAR_TT))
+print(paste("Eac_car_SM_CO =", Eac_car_SM_CO))
+print(paste("Eac_car_SM_TT =", Eac_car_SM_TT))
+print(paste("Eac_car_TRAIN_CO =", Eac_car_TRAIN_CO))
+print(paste("Eac_car_TRAIN_TT =", Eac_car_TRAIN_TT))
+```
+
+## 7.
+
+Note that all the aggregate direct elasticity of the variable SM_TT are negative. It means that on average, an increase of 1% in SM travel time would lead to a decrease of approximately 0.55% in the aggregate probability of choosing SM. However, the aggregate cross elasticities of the variable SM_TT are all positive. It means that an increase of 1% in SM travel time would lead to a increase of 0.62% and 0.95% in the aggregate probability of choosing train and car respectively. Those results follows intuition as a higher travelling time for the same cost makes the alternative less attractive.
+
+## 8.
+
+In this question, we calculate aggregate direct marginal effects. To do so, we calculate first individual direct marginal effects and calculate aggregate by using sample enumeration method.
+
+```{r}
+#Individual direct marginal effect
+Mid_train_CO = train*(1-train)*est_b_ctr
+Mid_train_TT = train*(1-train)*est_b_tt_pt
+Mid_train_GA = train*(1-train)*est_b_ga
+Mid_SM_CO = SM*(1-SM)*est_b_csm
+Mid_SM_TT = SM*(1-SM)*est_b_tt_pt
+Mid_SM_GA = SM*(1-SM)*est_b_ga
+Mid_car_CO = car*(1-car)*est_b_ccar
+Mid_car_TT = car*(1-car)*est_b_tt_car
+Mid_car_GA = car*(1-car)*est_b_ga
+
+#Aggregate direct marginal effect
+Mad_train_CO = sum(predictions_new$train*Mid_train_CO)/sum(predictions_new$train)
+Mad_train_TT = sum(predictions_new$train*Mid_train_TT)/sum(predictions_new$train)
+Mad_train_GA = sum(predictions_new$train*Mid_train_GA)/sum(predictions_new$train)
+Mad_SM_CO = sum(predictions_new$SM*Mid_SM_CO)/sum(predictions_new$SM)
+Mad_SM_TT = sum(predictions_new$SM*Mid_SM_TT)/sum(predictions_new$SM)
+Mad_SM_GA = sum(predictions_new$SM*Mid_SM_GA)/sum(predictions_new$SM)
+Mad_car_CO = sum(predictions_new$car*Mid_car_CO)/sum(predictions_new$car)
+Mad_car_TT = sum(predictions_new$car*Mid_car_TT)/sum(predictions_new$car)
+Mad_car_GA = sum(predictions_new$car*Mid_car_GA)/sum(predictions_new$car)
+```
+
+```{r}
+#| echo: false
+print("Aggregate direct marginal effect: ")
+print(paste("Mad_train_CO =", Mad_train_CO))
+print(paste("Mad_train_TT =", Mad_train_TT))
+print(paste("Mad_train_GA =", Mad_train_GA))
+print(paste("Mad_SM_CO =", Mad_SM_CO))
+print(paste("Mad_SM_TT =", Mad_SM_TT))
+print(paste("Mad_SM_GA =", Mad_SM_GA))
+print(paste("Mad_car_CO =", Mad_car_CO))
+print(paste("Mad_car_TT =", Mad_car_TT))
+print(paste("Mad_car_GA =", Mad_car_GA))
+```
+
+## 9.
+
+Note that all the aggregate direct marginal effect of the variable GA are positive. It means if someone possess a GA, they will be more likely to take train, SM or car. Overall, people possessing a GA travel more than those who do not have one, which is why all the aggregate direct marginal effect are positive. The utility function associated with SM is the most affected by GA as the coefficient is the highest in absolute value, followed by car and train. SM is the first choice of people possessing GA as they want to make it worth, conversely train is less interesting as SM is more efficient for the same cost.
+
+## 10.
+
+In this question, we calculate the value of travel time saving of each mode, which is the ratio of travel time and travel cost.
+
+```{r}
+#| echo: false
+VTTS_train = est_b_tt_pt/est_b_ctr
+VTTS_SM = est_b_tt_pt/est_b_csm
+VTTS_car = est_b_tt_car/est_b_ccar
+```
+
+```{r}
+#| echo: false
+print(paste("VTTS_train =", VTTS_train))
+print(paste("VTTS_SM =", VTTS_SM))
+print(paste("VTTS_car =", VTTS_car))
+```
+
+A higher VTTS indicates a higher value on time saving, meaning that people are ready to pay more to save time. Here, the train has the highest VTTS followed closely by SM and then car is way lower. Therefore, when taking train or SM people are willing to pay more to save time than when taking car.
+
+## 11.
+
+Let's reduce the SM travel time value by 20% to see how it impacts choice probabilities.
+
+```{r}
+#| echo: false
+#| include: false
+#database modified 
+database$SM_TT = database$SM_TT*0.8
+```
+
+```{r}
+#| echo: false
+#| include: false
+apollo_inputs = apollo_validateInputs()
+#Rerun predictions
+predictions_new = apollo_prediction(model, apollo_probabilities, apollo_inputs)
+```
+
+```{r}
+#| echo: false
+#| include: false
+agg_train_smttreduced = mean(predictions_new$train)
+agg_car_smttreduced = mean(predictions_new$car)
+agg_sm_smttreduced = mean(predictions_new$SM)
+```
+
+```{r}
+#| echo: false
+print("Base probabilities :")
+print(paste("train = ", agg_train))
+print(paste("SM = ", agg_sm))
+print(paste("car = ", agg_car))
+print("After reducing SM travel time :")
+print(paste("train_smttreduced =", agg_train_smttreduced))
+print(paste("car_smttreduced =", agg_car_smttreduced))
+print(paste("sm_smttreduced =", agg_sm_smttreduced))
+```
+
+After reducing SM travel time, its aggregate choice probabilities increased a bit, which is logical as SM is becoming more efficient for the same price, thus more attractive.
+
+## 12.
+
+Let's exclude the GA variable from our utility function to see how it impacts the estimated cost coefficients.
+
+```{r}
+#| echo: false
+#| include: false
+# install the package if it has not been installed
+if (!("apollo" %in% rownames(installed.packages()))){
+  install.packages("apollo")
+} 
+if (!("tidyverse" %in% rownames(installed.packages()))){
+  install.packages("tidyverse")
+} 
+
+# ################################################################# #
+#### LOAD LIBRARY AND DEFINE CORE SETTINGS                       ####
+# ################################################################# #
+
+### Load Apollo library｜パッケージをロードする
+library(apollo)
+library(tidyverse)
+
+### Initialise code｜コードを初期化する
+apollo_initialise()
+
+### Set core controls｜コア項目を設定する（モデル名、モデルの説明、個人IDの変数設定）
+apollo_control = list(
+  modelName  ="Apollo MidTerm Diebolt Jordan",
+  modelDescr ="Simple MNL model on mode choice RP data",
+  indivID    ="ID" #based on the dataset
+)
+
+# ################################################################# #
+#### LOAD DATA AND APPLY ANY TRANSFORMATIONS                     ####
+# ################################################################# #
+
+### read data|データを読み込む
+database = read.csv("smdata_ps1.csv",header=TRUE)
+
+# ################################################################# #
+#### ANALYSIS OF CHOICES                                         ####
+# ################################################################# #
+
+choiceAnalysis_settings <- list(
+  alternatives = c(train=1, SM=2, car=3),
+  avail        = list(train=database$TRAIN_AV, SM=database$SM_AV,  car=database$CAR_AV),
+  choiceVar    = database$CHOICE,
+  explanators  = database[,c("TICKET","WHO","LUGGAGE","AGE","MALE","INCOME","ORIGIN","DEST")],
+  rows         = 'all'
+)
+
+apollo_choiceAnalysis(choiceAnalysis_settings, apollo_control, database)
+# ################################################################# #
+#### DEFINE MODEL PARAMETERS                                     ####
+# ################################################################# #
+
+### Vector of parameters, including any that are kept fixed in estimation
+### 固定パラメータを含むパラメータのベクトル
+
+apollo_beta=c(asc_train   = 0,    #Initial value start from 0
+              asc_sm   = 0,
+              b_ctr = 0,
+              b_csm = 0,
+              b_ccar = 0,
+              b_tt_pt = 0,
+              b_tt_car  = 0)
+### Vector with names (in quotes) of parameters to be kept fixed at their starting value in apollo_beta, use apollo_beta_fixed = c() if none
+###　初期値で固定する定数項（固定パラメータがない場合、apollo_beta_fixed = c()を使う）
+apollo_fixed = c()
+# ################################################################# #
+#### GROUP AND VALIDATE INPUTS                                   ####
+# ################################################################# #
+### 入力確認
+apollo_inputs = apollo_validateInputs()
+
+# ################################################################# #
+#### DEFINE MODEL AND LIKELIHOOD FUNCTION                        ####
+# ################################################################# #
+
+apollo_probabilities=function(apollo_beta, apollo_inputs, functionality="estimate"){
+  
+  ### Attach inputs and detach after function exit
+  apollo_attach(apollo_beta, apollo_inputs)
+  on.exit(apollo_detach(apollo_beta, apollo_inputs))
+  
+  ### Create list of probabilities P｜確率のリストを作成する
+  P = list()
+  
+  ### List of utilities: these must use the same names as in mnl_settings, order is irrelevant
+  ### 効用関数のリスト：選択肢の名義は以下の「mnl_settings」と同じでなければならない（順番は関係ない）
+  V = list()
+  V[['train']]  = asc_train  + b_ctr  * TRAIN_CO + b_tt_pt * TRAIN_TT 
+  V[['SM']]  = asc_sm  + b_csm*SM_CO + b_tt_pt * SM_TT 
+  V[['car']]  = b_ccar*CAR_CO + b_tt_car*CAR_TT
+  
+  ### Define settings for MNL model component
+  ###　MNLモデル項目を設定する
+  mnl_settings = list(
+    alternatives  = c(train=1, SM=2, car=3), 
+    avail         = list(train=TRAIN_AV, SM=SM_AV,  car=CAR_AV),
+    choiceVar     = CHOICE,
+    V             = V
+  )
+  
+  ### Compute probabilities using MNL model
+  ### MNLを用いて選択確率を求める
+  P[['model']] = apollo_mnl(mnl_settings, functionality)
+  
+  ### Take product across observation for same individuals(panel data only)
+  ###　個体（意思決定者）毎の確率積を求める（パネルデータの場合のみ）
+ # P = apollo_panelProd(P, apollo_inputs, functionality)
+  
+  ### Prepare and return outputs of function
+  ### アウトプットを整理して返す
+  P = apollo_prepareProb(P, apollo_inputs, functionality)
+  return(P)
+}
+
+# ################################################################# #
+#### MODEL ESTIMATION                                            ####
+# ################################################################# #
+
+model = apollo_estimate(apollo_beta, apollo_fixed, apollo_probabilities, apollo_inputs)
+
+# ################################################################# #
+#### MODEL OUTPUTS                                               ####
+# ################################################################# #
+
+# ----------------------------------------------------------------- #
+#---- FORMATTED OUTPUT (TO SCREEN)                               ----
+# ----------------------------------------------------------------- #
+
+apollo_modelOutput(model)
+
+# ################################################################# #
+#### PREDICTION                                                  ####
+# ################################################################# #
+
+# ----------------------------------------------------------------- #
+#---- ESTIMATED PROBABILITIES                                    ----
+# ----------------------------------------------------------------- #
+
+predictions_new = apollo_prediction(model, apollo_probabilities, apollo_inputs)
+
+#Estimated coefficients
+est_asc_train_noGA   = apollo_modelOutput(model)[1]
+est_sc_sm_noGA   = apollo_modelOutput(model)[2]
+est_b_ctr_noGA = apollo_modelOutput(model)[3]
+est_b_csm_noGA = apollo_modelOutput(model)[4]
+est_b_ccar_noGA = apollo_modelOutput(model)[5]
+est_b_tt_pt_noGA = apollo_modelOutput(model)[6]
+est_b_tt_car_noGA  = apollo_modelOutput(model)[7]
+```
+
+```{r}
+#| echo: false
+print("Without excluding GA variable :")
+print(paste("est_b_ctr = ", est_b_ctr))
+print(paste("est_b_csm = ", est_b_csm))
+print("Excluding GA variable :")
+print(paste("est_b_ctr_noGA = ", est_b_ctr_noGA))
+print(paste("est_b_csm_noGA = ", est_b_csm_noGA))
+```
+
+The train and Swissmetro cost parameters sign change when removing the variable GA, they become positive. If a cost coefficient of an alternative is positive, it means that if the cost increases the alternative is more likely to be chosen, which is counter intuitive. Therefore, it is necessary to take the GA variable into account to have coherent results.
+
+## 13.
+
+Let's take into account the variable LUGGAGE in our utility function.
+
+```{r}
+#| echo: false
+#| include: false
+
+# install the package if it has not been installed
+if (!("apollo" %in% rownames(installed.packages()))){
+  install.packages("apollo")
+} 
+if (!("tidyverse" %in% rownames(installed.packages()))){
+  install.packages("tidyverse")
+} 
+
+# ################################################################# #
+#### LOAD LIBRARY AND DEFINE CORE SETTINGS                       ####
+# ################################################################# #
+
+### Load Apollo library｜パッケージをロードする
+library(apollo)
+library(tidyverse)
+
+### Initialise code｜コードを初期化する
+apollo_initialise()
+
+### Set core controls｜コア項目を設定する（モデル名、モデルの説明、個人IDの変数設定）
+apollo_control = list(
+  modelName  ="Apollo MidTerm normal",
+  modelDescr ="Simple MNL model on mode choice RP data",
+  indivID    ="ID" #based on the dataset
+)
+
+# ################################################################# #
+#### LOAD DATA AND APPLY ANY TRANSFORMATIONS                     ####
+# ################################################################# #
+
+### read data|データを読み込む
+database = read.csv("smdata_ps1.csv",header=TRUE)
+
+# ################################################################# #
+#### ANALYSIS OF CHOICES                                         ####
+# ################################################################# #
+
+choiceAnalysis_settings <- list(
+  alternatives = c(train=1, SM=2, car=3),
+  avail        = list(train=database$TRAIN_AV, SM=database$SM_AV,  car=database$CAR_AV),
+  choiceVar    = database$CHOICE,
+  explanators  = database[,c("TICKET","WHO","LUGGAGE","AGE","MALE","INCOME","GA","ORIGIN","DEST","LUGGAGE")],
+  rows         = 'all'
+)
+
+apollo_choiceAnalysis(choiceAnalysis_settings, apollo_control, database)
+# ################################################################# #
+#### DEFINE MODEL PARAMETERS                                     ####
+# ################################################################# #
+
+### Vector of parameters, including any that are kept fixed in estimation
+### 固定パラメータを含むパラメータのベクトル
+apollo_beta=c(asc_train   = 0,    #Initial value start from 0
+              asc_sm   = 0,
+              b_ctr = 0,
+              b_csm = 0,
+              b_ccar = 0,
+              b_tt_pt = 0,
+              b_tt_car  = 0,
+              b_ga = 0,
+              b_smluggage = 0,
+              b_carluggage = 0,
+              b_trainluggage = 0)
+
+### Vector with names (in quotes) of parameters to be kept fixed at their starting value in apollo_beta, use apollo_beta_fixed = c() if none
+###　初期値で固定する定数項（固定パラメータがない場合、apollo_beta_fixed = c()を使う）
+apollo_fixed = c()
+# ################################################################# #
+#### GROUP AND VALIDATE INPUTS                                   ####
+# ################################################################# #
+### 入力確認
+apollo_inputs = apollo_validateInputs()
+
+# ################################################################# #
+#### DEFINE MODEL AND LIKELIHOOD FUNCTION                        ####
+# ################################################################# #
+
+apollo_probabilities=function(apollo_beta, apollo_inputs, functionality="estimate"){
+  
+  ### Attach inputs and detach after function exit
+  apollo_attach(apollo_beta, apollo_inputs)
+  on.exit(apollo_detach(apollo_beta, apollo_inputs))
+  
+  ### Create list of probabilities P｜確率のリストを作成する
+  P = list()
+  
+  ### List of utilities: these must use the same names as in mnl_settings, order is irrelevant
+  ### 効用関数のリスト：選択肢の名義は以下の「mnl_settings」と同じでなければならない（順番は関係ない）
+  V = list()
+  V[['train']]  = asc_train  + b_ctr  * TRAIN_CO + b_tt_pt * TRAIN_TT + b_ga*GA +
+    b_trainluggage*LUGGAGE
+  V[['SM']]  = asc_sm  + b_csm*SM_CO + b_tt_pt * SM_TT + b_ga*GA + b_smluggage*LUGGAGE
+  V[['car']]  = b_ccar*CAR_CO + b_tt_car*CAR_TT + b_carluggage*LUGGAGE
+  
+  ### Define settings for MNL model component
+  ###　MNLモデル項目を設定する
+  mnl_settings = list(
+    alternatives  = c(train=1, SM=2, car=3), 
+    avail         = list(train=TRAIN_AV, SM=SM_AV,  car=CAR_AV),
+    choiceVar     = CHOICE,
+    V             = V
+  )
+  
+  ### Compute probabilities using MNL model
+  ### MNLを用いて選択確率を求める
+  P[['model']] = apollo_mnl(mnl_settings, functionality)
+  
+  ### Take product across observation for same individuals(panel data only)
+  ###　個体（意思決定者）毎の確率積を求める（パネルデータの場合のみ）
+ # P = apollo_panelProd(P, apollo_inputs, functionality)
+  
+  ### Prepare and return outputs of function
+  ### アウトプットを整理して返す
+  P = apollo_prepareProb(P, apollo_inputs, functionality)
+  return(P)
+}
+
+# ################################################################# #
+#### MODEL ESTIMATION                                            ####
+# ################################################################# #
+
+model = apollo_estimate(apollo_beta, apollo_fixed, apollo_probabilities, apollo_inputs)
+
+```
+
+```{r}
+#| echo: false
+#| include: false
+est_asc_train_luggage = apollo_modelOutput(model)[1]
+est_sc_sm_luggage  = apollo_modelOutput(model)[2]
+est_b_ctr_luggage = apollo_modelOutput(model)[3]
+est_b_csm_luggage = apollo_modelOutput(model)[4]
+est_b_ccar_luggage = apollo_modelOutput(model)[5]
+est_b_tt_pt_luggage = apollo_modelOutput(model)[6]
+est_b_tt_car_luggage  = apollo_modelOutput(model)[7]
+est_b_ga_luggage = apollo_modelOutput(model)[8]
+est_b_smluggage = apollo_modelOutput(model)[9]
+est_b_carluggage = apollo_modelOutput(model)[10]
+est_b_trainluggage = apollo_modelOutput(model)[11]
+```
+
+```{r}
+#| echo: false
+print("Estimated coefficients with base utility function: ")
+print(paste("est_asc_train = ",est_asc_train))
+print(paste("est_sc_sm = ",est_sc_sm))
+print(paste("est_b_ctr = ",est_b_ctr))
+print(paste("est_b_csm = ",est_b_csm))
+print(paste("est_b_ccar = ",est_b_ccar))
+print(paste("est_b_tt_pt = ",est_b_tt_pt))
+print(paste("est_b_tt_car = ",est_b_tt_car))
+print(paste("est_b_ga = ",est_b_ga))
+
+print("Estimated coefficients when luggage is taken into account: ")
+print(paste("est_asc_train_luggage = ",est_asc_train_luggage))
+print(paste("est_sc_sm_luggage = ",est_sc_sm_luggage))
+print(paste("est_b_ctr_luggage = ",est_b_ctr_luggage))
+print(paste("est_b_csm_luggage = ",est_b_csm_luggage))
+print(paste("est_b_ccar_luggage = ",est_b_ccar_luggage))
+print(paste("est_b_tt_pt_luggage = ",est_b_tt_pt_luggage))
+print(paste("est_b_tt_car_luggage = ",est_b_tt_car_luggage))
+print(paste("est_b_ga_luggage = ",est_b_ga_luggage))
+print(paste("est_b_carluggage = ", est_b_carluggage))
+print(paste("est_b_smluggage = ", est_b_smluggage))
+print(paste("est_b_trainluggage = ", est_b_trainluggage))
+```
+
+Let's use the goodness-of-fit measure to compare this model and the previous one :
+
+With the first model we had :
+
+-   ρ² vs equal shares = 0.2602
+
+-   ρ² vs observed shares = 0.1274
+
+When taking luggage into account :
+
+-   ρ² vs equal shares = 0.2608
+
+-   ρ² vs observed shares = 0.1339
+
+Therefore, the new model is superior in term of goodness-of-fit than the first one.
+
+Overall, these estimated coefficients are really close to the one we had before. The new coefficients associated with luggage are all negative, and in absolute value, the coefficient associated with car is the highest followed by sm and train. It means that when people have luggage the choice probability that they take the car is more reduced than for sm and train. I decided to include this parameter since as a transport user, I know that when I have to take luggage to travel it means that I will go pretty far from home, which leads me to take train instead of car.
