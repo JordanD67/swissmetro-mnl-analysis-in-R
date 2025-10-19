@@ -35,7 +35,7 @@ The project assesses the potential impact and demand for a major, hypothetical t
 
 ### Value of Travel Time Saving (VTTS)
 - Calculated as the ratio of the travel time coefficient to the travel cost coefficient:  
-  $ \text{VTTS} = \beta_{TT} / \beta_{CO} $
+**VTTS** (Value of Travel Time Saving) = `β_TT / β_CO`
 - Represents the monetary amount travelers are willing to pay to save one unit of travel time.
 
 ---
